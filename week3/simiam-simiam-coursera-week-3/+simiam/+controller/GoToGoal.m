@@ -40,10 +40,12 @@ classdef GoToGoal < simiam.controller.Controller
             obj = obj@simiam.controller.Controller('go_to_goal');
             
             % initialize memory banks
-            obj.Kp = 4;
-            obj.Ki =0.018;
-            obj.Kd =5.5;
-                        
+%             obj.Kp = 4;
+%             obj.Ki =0.018;
+%             obj.Kd =5.5;
+                        obj.Kp = 4;
+            obj.Ki = 0.01;
+            obj.Kd =0.1;            
             % errors
             obj.E_k = 0;
             obj.e_k_1 = 0;

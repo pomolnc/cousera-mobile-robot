@@ -64,7 +64,8 @@ classdef QBSupervisor < simiam.controller.Supervisor
             obj.prev_ticks = struct('left', 0, 'right', 0);
             
             obj.theta_d     = pi/4;
-            obj.v           = 0.2;
+%             obj.v           = 0.2;
+obj.v           = 10;
             obj.goal        = [-1, 1];
             obj.d_stop      = 0.05;
             
@@ -91,6 +92,12 @@ classdef QBSupervisor < simiam.controller.Supervisor
             outputs = obj.current_controller.execute(obj.robot, obj.state_estimate, inputs, dt);
                 
             [vel_r, vel_l] = obj.ensure_w(obj.robot, outputs.v, outputs.w);
+            %%%%%%%%%%%
+            [v_limited, w_limited] = obj.robot.dynamics.diff_to_uni(vel_r, vel_l);
+fprintf(' (v,w) = ( %0.3 f ,%0.3f), (v_limited,w_limited) = (%0.3f, %0.3f)\n ', ...
+outputs.v, outputs.w, v_limited, w_limited);
+            %%%%%%%%%%%%
+            
             obj.robot.set_wheel_speeds(vel_r, vel_l);
                         
             obj.update_odometry();
